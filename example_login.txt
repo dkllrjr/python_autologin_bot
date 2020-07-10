@@ -1,0 +1,3 @@
+url: https://url/of/the/login/page/here
+login: login@yourmail.com 
+password: yourpassword
