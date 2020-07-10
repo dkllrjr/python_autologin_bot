@@ -43,4 +43,4 @@ or
 $ python autologin_bot.py credential_file_path delay_between_pings
 ```
 
-The first command uses the default delay of 5 minutes between internet pings. Now just use with `systemd` or whatever your fancy!
+The first command uses the default delay of 5 minutes between internet pings. Now just use with `systemd` or with whatever you fancy!
