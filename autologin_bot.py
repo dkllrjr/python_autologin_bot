@@ -38,11 +38,18 @@ def login(credentials):
     cj = CookieJar()
     br = Browser()
     br.set_cookiejar(cj)
+    br.set_handle_redirect(True)
     br.open(credentials['url'])
 
+    # entering login
     br.select_form(nr=0)
     br.form['login'] = credentials['login']
     br.form['password'] = credentials['password']
+    br.submit()
+
+    # confirming again if there is a redirect
+    br.open(br.response().geturl())
+    br.select_form(nr=0)
     br.submit()
 
 # starting the process
@@ -61,7 +68,7 @@ credentials = extract_credentials(credential_file)
 # the actual process loop
 while True:
 
-    if ping('google.com',['-c','3']):
+    if ping('google.com',['-c','1']):
         print('sleeping between internet pings for: ' + str(delay) + ' seconds')
         sleep(delay)
     else:
