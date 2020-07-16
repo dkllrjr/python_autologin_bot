@@ -38,6 +38,7 @@ def login(credentials):
     cj = CookieJar()
     br = Browser()
     br.set_cookiejar(cj)
+    br.set_handle_robots(False)
     br.set_handle_redirect(True)
     br.open(credentials['url'])
 
