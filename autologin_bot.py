@@ -35,23 +35,29 @@ def extract_credentials(password_file):
 # login takes the credentials dictionary built by extract_credentials and performs the login 
 def login(credentials):
 
-    cj = CookieJar()
-    br = Browser()
-    br.set_cookiejar(cj)
-    br.set_handle_robots(False)
-    br.set_handle_redirect(True)
-    br.open(credentials['url'])
+    try:
+        cj = CookieJar()
+        br = Browser()
+        br.set_cookiejar(cj)
+        br.set_handle_robots(False)
+        br.set_handle_redirect(True)
+        br.open(credentials['url'])
 
-    # entering login
-    br.select_form(nr=0)
-    br.form['login'] = credentials['login']
-    br.form['password'] = credentials['password']
-    br.submit()
+        # entering login
+        br.select_form(nr=0)
+        br.form['login'] = credentials['login']
+        br.form['password'] = credentials['password']
+        br.submit()
 
-    # confirming again if there is a redirect
-    br.open(br.response().geturl())
-    br.select_form(nr=0)
-    br.submit()
+        # confirming again if there is a redirect
+        br.open(br.response().geturl())
+        br.select_form(nr=0)
+        br.submit()
+        
+        print('logged in')
+
+    except:
+        print('failed login, retrying after delay period') 
 
 # starting the process
 
@@ -68,10 +74,10 @@ credentials = extract_credentials(credential_file)
 
 # the actual process loop
 while True:
-
+    
     if ping('google.com',['-c','1']):
         print('sleeping between internet pings for: ' + str(delay) + ' seconds')
         sleep(delay)
     else:
         login(credentials)
-        print('logged in')
+        sleep(delay)
