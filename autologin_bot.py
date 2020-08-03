@@ -3,6 +3,8 @@ from http.cookiejar import CookieJar
 from subprocess import call
 from time import sleep
 from sys import argv
+from random import choice
+from random import random
 
 # functions defined here
 
@@ -75,9 +77,11 @@ credentials = extract_credentials(credential_file)
 # the actual process loop
 while True:
     
-    if ping('google.com',['-c','1']):
-        print('sleeping between internet pings for: ' + str(delay) + ' seconds')
-        sleep(delay)
+    domains = ['4.2.2.2','4.2.2.1','8.8.8.8','google.com','gmail.com']
+    if ping(choice(domains),['-c','1']):
+        random_delay = random()*delay
+        print('sleeping between internet pings for about: ' + str(int(random_delay)) + ' seconds')
+        sleep(random_delay)
     else:
         login(credentials)
         sleep(delay)
