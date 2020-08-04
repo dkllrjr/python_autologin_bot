@@ -35,7 +35,7 @@ def extract_credentials(password_file):
     return credentials
 
 # login takes the credentials dictionary built by extract_credentials and performs the login 
-def login(credentials):
+def login(credentials,random_delay):
 
     try:
         cj = CookieJar()
@@ -59,7 +59,8 @@ def login(credentials):
         print('logged in')
 
     except:
-        print('failed login, retrying after delay period') 
+        # print('failed login, retrying after delay period of about: ' + str(int(random_delay)) + ' seconds')
+        pass
 
 # starting the process
 
@@ -77,11 +78,11 @@ credentials = extract_credentials(credential_file)
 # the actual process loop
 while True:
     
+    random_delay = random()*delay
     domains = ['4.2.2.2','4.2.2.1','8.8.8.8','google.com','gmail.com']
     if ping(choice(domains),['-c','1']):
-        random_delay = random()*delay
         print('sleeping between internet pings for about: ' + str(int(random_delay)) + ' seconds')
         sleep(random_delay)
     else:
-        login(credentials)
-        sleep(delay)
+        login(credentials,random_delay)
+        # sleep(random_delay)
